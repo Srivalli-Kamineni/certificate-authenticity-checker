@@ -3,7 +3,7 @@
 **Agentic AI Hackathon 2026 — Powered by Ziro.Digital**  
 **Track:** Education & Career AI  
 **Team Name:** Nexora  
-**Lead Developer:** Srivalli Kamineni  
+
 
 ---
 
