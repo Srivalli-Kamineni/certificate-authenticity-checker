@@ -22,43 +22,34 @@ Traditional background verification processes introduce massive friction:
 
 ## 2. Core Agentic Architecture & System Workflow
 
-VeriCert is engineered as a deterministic, multi-stage agentic state machine:
-┌────────────────────────────────────────────────────────┐
-│ STAGE 1: INGESTION │
-│ Ingest Credential ID, Candidate Claim, & Consent │
-└───────────────────────────┬────────────────────────────┘
-│
-▼
-┌────────────────────────────────────────────────────────┐
-│ STAGE 2: CONSENT GUARDRAIL │
-│ Is legal applicant consent verified on file? │
-│ ├── NO ──► HALT: Disable lookup completely (TC4) │
-│ └── YES ──► Formulate target query plan │
-└───────────────────────────┬────────────────────────────┘
-│
-▼
-┌────────────────────────────────────────────────────────┐
-│ STAGE 3: HUMAN-IN-THE-LOOP (HITL) GATE │
-│ Presents execution target to recruiter for sign-off │
-│ └── Recruiter approves execution │
-└───────────────────────────┬────────────────────────────┘
-│
-▼
-┌────────────────────────────────────────────────────────┐
-│ STAGE 4: ISSUER VERIFICATION ENGINE │
-│ Queries authoritative registry, captures metadata, │
-│ and generates official screenshot audit proof │
-└───────────────────────────┬────────────────────────────┘
-│
-▼
-┌────────────────────────────────────────────────────────┐
-│ STAGE 5: DIAGNOSTICS & AUDIT LOGGING │
-│ ├── Exact Match ──────► VERIFIED (TC1) │
-│ ├── Name Divergence ──► MISMATCH DETECTED (TC2) │
-│ └── 0 Rows Returned ──► NOT FOUND (TC3 - Safe Rule) │
-│ Logs transaction into immutable session telemetry │
-└────────────────────────────────────────────────────────┘
----
+VeriCert is engineered as a deterministic, multi-stage agentic workflow that guides each credential check through a sequence of validation, governance, and audit steps:
+
+- **Stage 1: Ingestion & Input Validation**
+  - Accepts the credential identifier, applicant's claimed full name, certification title, and the designated issuing organization.
+  - Supports direct drag-and-drop document upload (PDF, PNG, JPG) with in-browser preview rendering.
+  - Automatically maps candidate parameters into standardized verification payloads.
+
+- **Stage 2: Consent Guardrail & Pre-flight Gate**
+  - Evaluates whether legal candidate consent is on record before initiating any external query.
+  - **Consent Missing (TC4):** Immediately halts execution, triggers an alert, and disables the action button to protect applicant privacy.
+  - **Consent Confirmed:** Proceeds to formulate the structured verification plan.
+
+- **Stage 3: Human-in-the-Loop (HITL) Sign-off**
+  - Formulates an explicit execution plan outlining the target registry gateway and queried identifiers.
+  - Requires the human recruiter to review and click **Approve & Execute Agent Lookup** before contacting databases.
+  - Ensures autonomous agent actions remain fully overseen by human decision-makers.
+
+- **Stage 4: Authoritative Issuer Query & Evidence Capture**
+  - Connects to the designated credential database or registry gateway.
+  - Extracts official recipient records, completion dates, and credential status.
+  - Automatically renders an official visual certificate proof snapshot with active timestamping.
+
+- **Stage 5: Diagnostics, Decision Classification & Audit Logging**
+  - Cross-references registry records against candidate claims to classify the result:
+    - **VERIFIED (TC1):** Exact match across candidate name and course details (100% integrity confirmed).
+    - **MISMATCH DETECTED (TC2):** Credential ID is valid but belongs to a different recipient; outputs a field-by-field identity discrepancy table.
+    - **NOT FOUND (TC3):** Zero rows returned; strictly reported as *Not Found* and never defamed as "Fake".
+  - Logs every transaction (timestamp, ID, outcome, consent status) into an immutable session telemetry ledger with one-click CSV export.
 
 ## 3. Official Hackathon Test Cases & Validation Matrix
 
@@ -113,11 +104,24 @@ The system has been strictly evaluated against all mandatory test scenarios spec
 
 ---
 
-## 7. Directory Structure
-├── app.py # Main Agentic Application & Multi-Tab Dashboard
-├── requirements.txt # Project dependencies
-├── README.md # Comprehensive system documentation
-└── evidence/ # Generated timestamped visual proof screenshots
----
+## 7. Directory Structure & File Manifest
+
+The repository is structured with the following project files:
+
+- **`app.py`**
+  - The primary application file containing the complete agentic pipeline, multi-tab interface, and verification engine.
+  - **Tab 1 (Verification & Diagnosis):** Handles credential inputs, consent checks, recruiter approval gates, and issue diagnosis.
+  - **Tab 2 (Saved Credentials Database):** Displays authoritative records and provides an interactive dossier inspector to review past history for any ID.
+  - **Tab 3 (Register New Credential):** Allows recruiters to register new credentials manually or through direct PDF/image upload.
+  - **Tab 4 (Analytics & Compliance Audit):** Provides live KPI telemetry (pass rates, mismatches), session audit ledger, and official CSV report downloads.
+
+- **`requirements.txt`**
+  - Lists the minimal Python dependencies required to run the project (`streamlit`, `pandas`, `pillow`).
+
+- **`README.md`**
+  - Comprehensive documentation covering problem background, agent architecture, test cases, and safety compliance.
+
+- **`evidence/`**
+  - Local evidence store where timestamped verification proof screenshots are automatically generated and saved for audit trails.
 
 
