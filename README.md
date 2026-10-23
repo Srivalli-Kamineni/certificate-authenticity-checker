@@ -1,4 +1,4 @@
-# 🛡️ VeriCert: Autonomous Certificate Authenticity Checker Agent
+#  VeriCert: Autonomous Certificate Authenticity Checker Agent
 
 **Agentic AI Hackathon 2026 — Powered by Ziro.Digital**  
 **Track:** Education & Career AI  
@@ -120,12 +120,4 @@ The system has been strictly evaluated against all mandatory test scenarios spec
 └── evidence/ # Generated timestamped visual proof screenshots
 ---
 
-## 8. Local Installation & Setup
 
-### Prerequisites
-- Python 3.10 or higher installed on your system.
-
-### Step 1: Clone the Repository
-```bash
-git clone https://github.com/<your-username>/certificate-authenticity-checker.git
-cd certificate-authenticity-checker
